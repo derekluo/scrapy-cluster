@@ -1,9 +1,9 @@
 # Specify the host and port to use when connecting to Redis.
-REDIS_HOST = ''
+REDIS_HOST = 'localhost'
 REDIS_PORT = '6379'
 
 # Kafka server information
-KAFKA_HOSTS = ''
+KAFKA_HOSTS = 'localhost'
 KAFKA_TOPIC_PREFIX = 'demo'
 
 # Scrapy Settings
@@ -36,17 +36,17 @@ ITEM_PIPELINES = {
 SPIDER_MIDDLEWARES = {
     # disable built-in DepthMiddleware, since we do our own
     # depth management per crawl request
-    'scrapy.contrib.spidermiddleware.depth.DepthMiddleware': None,
+    'scrapy.spidermiddlewares.depth.DepthMiddleware': None,
 }
 
 DOWNLOADER_MIDDLEWARES = {
     # Handle timeout retries with the redis scheduler and logger
-    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware' : None,
+    'scrapy.downloadermiddlewares.retry.RetryMiddleware' : None,
     'crawling.redis_retry_middleware.RedisRetryMiddleware': 510,
 }
 
 # Disable the built in logging in production
-LOG_ENABLED = False
+LOG_ENABLED = True
 
 # Allow all return codes
 HTTPERROR_ALLOW_ALL = True

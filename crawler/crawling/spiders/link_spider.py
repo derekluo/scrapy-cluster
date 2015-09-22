@@ -1,6 +1,6 @@
 import scrapy
 
-from scrapy.log import INFO
+#from scrapy.log import INFO
 
 from scrapy.http import Request
 from lxmlhtml import LxmlLinkExtractor as LinkExtractor
@@ -23,7 +23,7 @@ class LinkSpider(RedisSpider):
         super(LinkSpider, self).__init__(*args, **kwargs)
 
     def parse(self, response):
-        self.log("crawled url {}".format(response.request.url), level=INFO)
+        self.logger.info("crawled url {}".format(response.request.url))
 
         cur_depth = 0
         if 'curdepth' in response.meta:
@@ -49,11 +49,11 @@ class LinkSpider(RedisSpider):
 
         # determine whether to continue spidering
         if cur_depth >= response.meta['maxdepth']:
-            self.log("Not spidering links in '{}' because" \
+            self.logger.info("Not spidering links in '{}' because" \
                 " cur_depth={} >= maxdepth={}".format(
                 response.url,
                 cur_depth,
-                response.meta['maxdepth']), level=INFO)
+                response.meta['maxdepth']))
         else:
             # we are spidering -- yield Request for each discovered link
             link_extractor = LinkExtractor(
@@ -83,8 +83,7 @@ class LinkSpider(RedisSpider):
                         },
                         )
 
-                self.log("Trying to follow link '{}'".format(req.url),
-                        level=INFO)
+                self.logger.info("Trying to follow link '{}'".format(req.url))
                 yield req
 
         # raw response has been processed, yield to item pipeline
