@@ -29,9 +29,9 @@ DUPEFILTER_TIMEOUT = 60
 SCHEUDLER_ITEM_RETRIES = 3
 
 # Store scraped item in redis for post-processing.
-ITEM_PIPELINES = {
-    'crawling.pipelines.KafkaPipeline': 100,
-}
+#ITEM_PIPELINES = {
+#    'crawling.pipelines.KafkaPipeline': 100,
+#}
 
 SPIDER_MIDDLEWARES = {
     # disable built-in DepthMiddleware, since we do our own

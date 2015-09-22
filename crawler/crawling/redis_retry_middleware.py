@@ -1,5 +1,8 @@
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
 
+import logging
+logger = logging.getLogger(__name__)
+
 class RedisRetryMiddleware(RetryMiddleware):
 
     def __init__(self, settings):
@@ -8,10 +11,10 @@ class RedisRetryMiddleware(RetryMiddleware):
     def _retry(self, request, reason, spider):
         retries = request.meta.get('retry_times', 0) + 1
         if retries <= self.max_retry_times:
-            log.msg(format="Retrying %(request)s " \
-                            "(failed %(retries)d times): %(reason)s",
-                    level=log.DEBUG, spider=spider, request=request,
-                    retries=retries, reason=reason)
+            logger.debug("Retrying {request} " \
+                "(failed {retries} times): {reason}".format(
+                spider=spider, request=request,
+                retries=retries, reason=reason))
             retryreq = request.copy()
             retryreq.meta['retry_times'] = retries
             retryreq.dont_filter = True
@@ -20,7 +23,7 @@ class RedisRetryMiddleware(RetryMiddleware):
 
             return retryreq
         else:
-            log.msg(format="Gave up retrying %(request)s "\
-                            "(failed %(retries)d times): %(reason)s",
-                    level=log.DEBUG, spider=spider, request=request,
-                    retries=retries, reason=reason)
+            logger.debug("Gave up retrying {request} "\
+                "(failed {retries} times): {reason}".format(
+                spider=spider, request=request, 
+                retries=retries, reason=reason))

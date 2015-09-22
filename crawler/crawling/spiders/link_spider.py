@@ -4,7 +4,9 @@ import scrapy
 
 from scrapy.http import Request
 from lxmlhtml import LxmlLinkExtractor as LinkExtractor
-from scrapy.conf import settings
+
+from scrapy.utils.project import get_project_settings
+settings = get_project_settings()
 
 from crawling.items import RawResponseItem
 from redis_spider import RedisSpider

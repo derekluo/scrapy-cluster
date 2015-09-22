@@ -6,8 +6,6 @@ import json
 import datetime as dt
 import time
 
-import logging
-
 from kafka import KafkaClient, SimpleProducer
 
 from crawling.items import RawResponseItem

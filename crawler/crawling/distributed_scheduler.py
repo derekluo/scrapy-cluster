@@ -1,6 +1,8 @@
 from scrapy.utils.misc import load_object
 from scrapy.http import Request
-from scrapy.conf import settings
+
+from scrapy.utils.project import get_project_settings
+settings = get_project_settings()
 
 import redis
 import json
